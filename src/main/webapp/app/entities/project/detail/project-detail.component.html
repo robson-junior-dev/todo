@@ -1,0 +1,43 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="project">
+      <h2 data-cy="projectDetailsHeading"><span jhiTranslate="todoApp.project.detail.title">Project</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ project.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="todoApp.project.name">Name</span></dt>
+        <dd>
+          <span>{{ project.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="todoApp.project.description">Description</span></dt>
+        <dd>
+          <span>{{ project.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="todoApp.project.collaborator">Collaborator</span></dt>
+        <dd>
+          <span *ngFor="let collaborator of project.collaborators; let last = last">
+            <a [routerLink]="['/collaborator', collaborator.id, 'view']">{{ collaborator.name }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/project', project.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

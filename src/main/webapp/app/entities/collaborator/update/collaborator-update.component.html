@@ -1,0 +1,208 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-collaborator-heading"
+        data-cy="CollaboratorCreateUpdateHeading"
+        jhiTranslate="todoApp.collaborator.home.createOrEditLabel"
+      >
+        Criar ou editar Collaborator
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="todoApp.collaborator.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('name')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 1 }"
+            >
+              Este campo deve ter pelo menos 1 caracteres.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('name')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 255 }"
+            >
+              Este campo não pode ter mais de 255 caracteres.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('name')?.errors?.pattern"
+              jhiTranslate="entity.validation.pattern"
+              [translateValues]="{ pattern: 'Name' }"
+            >
+              Este campo deve estar dentro do seguinte padrão Name.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="todoApp.collaborator.dateOfBirth" for="field_dateOfBirth">Date Of Birth</label>
+          <div class="input-group">
+            <input
+              id="field_dateOfBirth"
+              data-cy="dateOfBirth"
+              type="text"
+              class="form-control"
+              name="dateOfBirth"
+              ngbDatepicker
+              #dateOfBirthDp="ngbDatepicker"
+              formControlName="dateOfBirth"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateOfBirthDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="todoApp.collaborator.photo" for="field_photo">Photo</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('photoContentType')!.value + ';base64,' + editForm.get('photo')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('photo')!.value"
+              alt="collaborator image"
+            />
+            <div *ngIf="editForm.get('photo')!.value" class="form-text text-danger clearfix">
+              <span class="pull-start">{{ editForm.get('photoContentType')!.value }}, {{ byteSize(editForm.get('photo')!.value!) }}</span>
+              <button
+                type="button"
+                (click)="clearInputImage('photo', 'photoContentType', 'file_photo')"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_photo"
+              data-cy="photo"
+              (change)="setFileData($event, 'photo', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="photo" id="field_photo" data-cy="photo" formControlName="photo" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="photoContentType"
+            id="field_photoContentType"
+            formControlName="photoContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="todoApp.collaborator.document" for="field_document">Document</label>
+          <div>
+            <div *ngIf="editForm.get('document')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('document')!.value!, editForm.get('documentContentType')!.value!)"
+                jhiTranslate="entity.action.open"
+                >Abrir</a
+              ><br />
+              <span class="pull-start"
+                >{{ editForm.get('documentContentType')!.value }}, {{ byteSize(editForm.get('document')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="editForm.patchValue({ document: undefined, documentContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_document"
+              data-cy="document"
+              (change)="setFileData($event, 'document', false)"
+              jhiTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="document" id="field_document" data-cy="document" formControlName="document" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="documentContentType"
+            id="field_documentContentType"
+            formControlName="documentContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="todoApp.collaborator.cpf" for="field_cpf">Cpf</label>
+          <input type="text" class="form-control" name="cpf" id="field_cpf" data-cy="cpf" formControlName="cpf" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="todoApp.collaborator.isLeader" for="field_isLeader">Is Leader</label>
+          <input type="checkbox" class="form-check" name="isLeader" id="field_isLeader" data-cy="isLeader" formControlName="isLeader" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="todoApp.collaborator.user" for="field_user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+            <option *ngIf="!editForm.get('user')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['user'])!.invalid && (editForm.get(['user'])!.dirty || editForm.get(['user'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['user'])?.errors?.required" jhiTranslate="entity.validation.required">
+            O campo é obrigatório.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="todoApp.collaborator.leader" for="field_leader">Leader</label>
+          <select
+            class="form-control"
+            id="field_leader"
+            data-cy="leader"
+            name="leader"
+            formControlName="leader"
+            [compareWith]="compareCollaborator"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="collaboratorOption" *ngFor="let collaboratorOption of collaboratorsSharedCollection">
+              {{ collaboratorOption.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Salvar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,195 @@
+<div>
+  <h2 id="page-heading" data-cy="CollaboratorHeading">
+    <span jhiTranslate="todoApp.collaborator.home.title">Collaborators</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="todoApp.collaborator.home.refreshListLabel">Atualizar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-collaborator"
+        [routerLink]="['/collaborator/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="todoApp.collaborator.home.createLabel"> Criar novo Collaborator </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <jhi-filter [filters]="filters"></jhi-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="collaborators?.length === 0">
+    <span jhiTranslate="todoApp.collaborator.home.notFound">Nenhum Collaborator encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="collaborators && collaborators.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.collaborator.name">Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateOfBirth">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.collaborator.dateOfBirth">Date Of Birth</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="photo">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.collaborator.photo">Photo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="document">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.collaborator.document">Document</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="cpf">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.collaborator.cpf">Cpf</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isLeader">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.collaborator.isLeader">Is Leader</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="user.login">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.collaborator.user">User</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="leader.name">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.collaborator.leader">Leader</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let collaborator of collaborators; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/collaborator', collaborator.id, 'view']">{{ collaborator.id }}</a>
+          </td>
+          <td>{{ collaborator.name }}</td>
+          <td>{{ collaborator.dateOfBirth | formatMediumDate }}</td>
+          <td>
+            <a *ngIf="collaborator.photo" (click)="openFile(collaborator.photo, collaborator.photoContentType)">
+              <img
+                [src]="'data:' + collaborator.photoContentType + ';base64,' + collaborator.photo"
+                style="max-height: 30px"
+                alt="collaborator image"
+              />
+            </a>
+            <span *ngIf="collaborator.photo">{{ collaborator.photoContentType }}, {{ byteSize(collaborator.photo) }}</span>
+          </td>
+          <td>
+            <a
+              *ngIf="collaborator.document"
+              (click)="openFile(collaborator.document, collaborator.documentContentType)"
+              jhiTranslate="entity.action.open"
+              >Abrir</a
+            >
+            <span *ngIf="collaborator.document">{{ collaborator.documentContentType }}, {{ byteSize(collaborator.document) }}</span>
+          </td>
+          <td>{{ collaborator.cpf }}</td>
+          <td>{{ collaborator.isLeader }}</td>
+          <td>
+            {{ collaborator.user?.login }}
+          </td>
+          <td>
+            <div *ngIf="collaborator.leader">
+              <a [routerLink]="['/collaborator', collaborator.leader.id, 'view']">{{ collaborator.leader.name }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/project']"
+                [queryParams]="{ 'filter[collaboratorId.in]': collaborator.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  jhiTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('todoApp.collaborator.project' | translate) }"
+                  >Mostrar Project</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/collaborator', collaborator.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/collaborator', collaborator.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(collaborator)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Excluir</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="collaborators && collaborators.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

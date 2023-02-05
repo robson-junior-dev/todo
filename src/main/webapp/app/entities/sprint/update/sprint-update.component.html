@@ -1,0 +1,99 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-sprint-heading" data-cy="SprintCreateUpdateHeading" jhiTranslate="todoApp.sprint.home.createOrEditLabel">
+        Criar ou editar Sprint
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="todoApp.sprint.number" for="field_number">Number</label>
+          <input type="text" class="form-control" name="number" id="field_number" data-cy="number" formControlName="number" />
+          <div *ngIf="editForm.get('number')!.invalid && (editForm.get('number')!.dirty || editForm.get('number')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('number')?.errors?.required" jhiTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('number')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 1 }"
+            >
+              Este campo deve ter pelo menos 1 caracteres.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('number')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 10 }"
+            >
+              Este campo não pode ter mais de 10 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="todoApp.sprint.status" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'todoApp.SprintStatus.null' | translate }}</option>
+            <option *ngFor="let sprintStatus of sprintStatusValues" [value]="sprintStatus">
+              {{ 'todoApp.SprintStatus.' + sprintStatus | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('status')?.errors?.required" jhiTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="todoApp.sprint.project" for="field_project">Project</label>
+          <select
+            class="form-control"
+            id="field_project"
+            data-cy="project"
+            name="project"
+            formControlName="project"
+            [compareWith]="compareProject"
+          >
+            <option *ngIf="!editForm.get('project')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="projectOption" *ngFor="let projectOption of projectsSharedCollection">{{ projectOption.name }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['project'])!.invalid && (editForm.get(['project'])!.dirty || editForm.get(['project'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['project'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Salvar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

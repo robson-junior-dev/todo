@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="collaborator">
+      <h2 data-cy="collaboratorDetailsHeading"><span jhiTranslate="todoApp.collaborator.detail.title">Collaborator</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ collaborator.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="todoApp.collaborator.name">Name</span></dt>
+        <dd>
+          <span>{{ collaborator.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="todoApp.collaborator.dateOfBirth">Date Of Birth</span></dt>
+        <dd>
+          <span>{{ collaborator.dateOfBirth | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="todoApp.collaborator.photo">Photo</span></dt>
+        <dd>
+          <div *ngIf="collaborator.photo">
+            <a (click)="openFile(collaborator.photo, collaborator.photoContentType)">
+              <img
+                [src]="'data:' + collaborator.photoContentType + ';base64,' + collaborator.photo"
+                style="max-width: 100%"
+                alt="collaborator image"
+              />
+            </a>
+            {{ collaborator.photoContentType }}, {{ byteSize(collaborator.photo) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="todoApp.collaborator.document">Document</span></dt>
+        <dd>
+          <div *ngIf="collaborator.document">
+            <a (click)="openFile(collaborator.document, collaborator.documentContentType)" jhiTranslate="entity.action.open">Abrir</a>
+            {{ collaborator.documentContentType }}, {{ byteSize(collaborator.document) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="todoApp.collaborator.cpf">Cpf</span></dt>
+        <dd>
+          <span>{{ collaborator.cpf }}</span>
+        </dd>
+        <dt><span jhiTranslate="todoApp.collaborator.isLeader">Is Leader</span></dt>
+        <dd>
+          <span>{{ collaborator.isLeader }}</span>
+        </dd>
+        <dt><span jhiTranslate="todoApp.collaborator.user">User</span></dt>
+        <dd>
+          <span>{{ collaborator.user?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="todoApp.collaborator.leader">Leader</span></dt>
+        <dd>
+          <div *ngIf="collaborator.leader">
+            <a [routerLink]="['/collaborator', collaborator.leader.id, 'view']">{{ collaborator.leader.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/collaborator', collaborator.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

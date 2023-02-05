@@ -1,0 +1,66 @@
+{
+  "applications": "*",
+  "changelogDate": "20230205205023",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "task",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "2000",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "TaskStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "TO_DO,IN_PROGRESS,FINISHED"
+    },
+    {
+      "fieldName": "hoursToComplete",
+      "fieldType": "Long",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "attachment",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "image",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Task",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "number",
+      "otherEntityName": "sprint",
+      "relationshipName": "sprint",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "collaborator",
+      "relationshipName": "collaborator",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

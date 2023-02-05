@@ -1,0 +1,11 @@
+id;number;status;project_id
+1;âmbar Marg;IN_PROGRESS;1
+2;microchip;IN_PROGRESS;2
+3;sensor Lea;IN_PROGRESS;3
+4;Associate ;IN_PLANNING;4
+5;Global Sei;IN_PROGRESS;5
+6;frictionle;IN_PLANNING;6
+7;Architect;FINISHED;7
+8;Configurat;IN_PROGRESS;8
+9;SDD;IN_PLANNING;9
+10;Pequeno Al;IN_PROGRESS;10

@@ -46,6 +46,12 @@ public class CacheConfiguration {
             createCache(cm, br.dev.robsonjunior.todo.domain.User.class.getName());
             createCache(cm, br.dev.robsonjunior.todo.domain.Authority.class.getName());
             createCache(cm, br.dev.robsonjunior.todo.domain.User.class.getName() + ".authorities");
+            createCache(cm, br.dev.robsonjunior.todo.domain.Collaborator.class.getName());
+            createCache(cm, br.dev.robsonjunior.todo.domain.Collaborator.class.getName() + ".projects");
+            createCache(cm, br.dev.robsonjunior.todo.domain.Project.class.getName());
+            createCache(cm, br.dev.robsonjunior.todo.domain.Project.class.getName() + ".collaborators");
+            createCache(cm, br.dev.robsonjunior.todo.domain.Sprint.class.getName());
+            createCache(cm, br.dev.robsonjunior.todo.domain.Task.class.getName());
             // jhipster-needle-caffeine-add-entry
         };
     }

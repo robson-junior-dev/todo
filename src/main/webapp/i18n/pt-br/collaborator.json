@@ -1,0 +1,32 @@
+{
+  "todoApp": {
+    "collaborator": {
+      "home": {
+        "title": "Collaborators",
+        "refreshListLabel": "Atualizar lista",
+        "createLabel": "Criar novo Collaborator",
+        "createOrEditLabel": "Criar ou editar Collaborator",
+        "notFound": "Nenhum Collaborator encontrado"
+      },
+      "created": "Um novo Collaborator foi criado com o identificador {{ param }}",
+      "updated": "Um Collaborator foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Collaborator foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Collaborator {{ id }}?"
+      },
+      "detail": {
+        "title": "Collaborator"
+      },
+      "id": "ID",
+      "name": "Name",
+      "dateOfBirth": "Date Of Birth",
+      "photo": "Photo",
+      "document": "Document",
+      "cpf": "Cpf",
+      "isLeader": "Is Leader",
+      "user": "User",
+      "leader": "Leader",
+      "project": "Project"
+    }
+  }
+}

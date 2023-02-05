@@ -1,0 +1,39 @@
+{
+  "applications": "*",
+  "changelogDate": "20230205205021",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "project",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "2000",
+      "fieldValidateRulesMinlength": "1"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Project",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "collaborator",
+      "otherEntityRelationshipName": "project",
+      "ownerSide": true,
+      "relationshipName": "collaborator",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceClass"
+}

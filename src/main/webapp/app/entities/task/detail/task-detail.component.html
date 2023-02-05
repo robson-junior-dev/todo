@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="task">
+      <h2 data-cy="taskDetailsHeading"><span jhiTranslate="todoApp.task.detail.title">Task</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ task.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="todoApp.task.name">Name</span></dt>
+        <dd>
+          <span>{{ task.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="todoApp.task.description">Description</span></dt>
+        <dd>
+          <span>{{ task.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="todoApp.task.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'todoApp.TaskStatus.' + task.status }}">{{ task.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="todoApp.task.hoursToComplete">Hours To Complete</span></dt>
+        <dd>
+          <span>{{ task.hoursToComplete }}</span>
+        </dd>
+        <dt><span jhiTranslate="todoApp.task.attachment">Attachment</span></dt>
+        <dd>
+          <div *ngIf="task.attachment">
+            <a (click)="openFile(task.attachment, task.attachmentContentType)" jhiTranslate="entity.action.open">Abrir</a>
+            {{ task.attachmentContentType }}, {{ byteSize(task.attachment) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="todoApp.task.image">Image</span></dt>
+        <dd>
+          <div *ngIf="task.image">
+            <a (click)="openFile(task.image, task.imageContentType)">
+              <img [src]="'data:' + task.imageContentType + ';base64,' + task.image" style="max-width: 100%" alt="task image" />
+            </a>
+            {{ task.imageContentType }}, {{ byteSize(task.image) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="todoApp.task.sprint">Sprint</span></dt>
+        <dd>
+          <div *ngIf="task.sprint">
+            <a [routerLink]="['/sprint', task.sprint.id, 'view']">{{ task.sprint.number }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="todoApp.task.collaborator">Collaborator</span></dt>
+        <dd>
+          <div *ngIf="task.collaborator">
+            <a [routerLink]="['/collaborator', task.collaborator.id, 'view']">{{ task.collaborator.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/task', task.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

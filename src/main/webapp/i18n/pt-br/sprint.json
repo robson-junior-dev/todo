@@ -1,0 +1,26 @@
+{
+  "todoApp": {
+    "sprint": {
+      "home": {
+        "title": "Sprints",
+        "refreshListLabel": "Atualizar lista",
+        "createLabel": "Criar novo Sprint",
+        "createOrEditLabel": "Criar ou editar Sprint",
+        "notFound": "Nenhum Sprint encontrado"
+      },
+      "created": "Um novo Sprint foi criado com o identificador {{ param }}",
+      "updated": "Um Sprint foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Sprint foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Sprint {{ id }}?"
+      },
+      "detail": {
+        "title": "Sprint"
+      },
+      "id": "ID",
+      "number": "Number",
+      "status": "Status",
+      "project": "Project"
+    }
+  }
+}

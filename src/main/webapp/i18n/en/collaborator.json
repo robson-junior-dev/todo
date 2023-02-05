@@ -1,0 +1,32 @@
+{
+  "todoApp": {
+    "collaborator": {
+      "home": {
+        "title": "Collaborators",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Collaborator",
+        "createOrEditLabel": "Create or edit a Collaborator",
+        "notFound": "No Collaborators found"
+      },
+      "created": "A new Collaborator is created with identifier {{ param }}",
+      "updated": "A Collaborator is updated with identifier {{ param }}",
+      "deleted": "A Collaborator is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Collaborator {{ id }}?"
+      },
+      "detail": {
+        "title": "Collaborator"
+      },
+      "id": "ID",
+      "name": "Name",
+      "dateOfBirth": "Date Of Birth",
+      "photo": "Photo",
+      "document": "Document",
+      "cpf": "Cpf",
+      "isLeader": "Is Leader",
+      "user": "User",
+      "leader": "Leader",
+      "project": "Project"
+    }
+  }
+}

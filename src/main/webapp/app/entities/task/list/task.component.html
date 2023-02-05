@@ -1,0 +1,165 @@
+<div>
+  <h2 id="page-heading" data-cy="TaskHeading">
+    <span jhiTranslate="todoApp.task.home.title">Tasks</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="todoApp.task.home.refreshListLabel">Atualizar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-task"
+        [routerLink]="['/task/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="todoApp.task.home.createLabel"> Criar novo Task </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <jhi-filter [filters]="filters"></jhi-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="tasks?.length === 0">
+    <span jhiTranslate="todoApp.task.home.notFound">Nenhum Task encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="tasks && tasks.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.task.name">Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="description">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.task.description">Description</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.task.status">Status</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="hoursToComplete">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.task.hoursToComplete">Hours To Complete</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="attachment">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.task.attachment">Attachment</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="image">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.task.image">Image</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="sprint.number">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.task.sprint">Sprint</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="collaborator.name">
+            <div class="d-flex">
+              <span jhiTranslate="todoApp.task.collaborator">Collaborator</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/task', task.id, 'view']">{{ task.id }}</a>
+          </td>
+          <td>{{ task.name }}</td>
+          <td>{{ task.description }}</td>
+          <td jhiTranslate="{{ 'todoApp.TaskStatus.' + task.status }}">{{ task.status }}</td>
+          <td>{{ task.hoursToComplete }}</td>
+          <td>
+            <a *ngIf="task.attachment" (click)="openFile(task.attachment, task.attachmentContentType)" jhiTranslate="entity.action.open"
+              >Abrir</a
+            >
+            <span *ngIf="task.attachment">{{ task.attachmentContentType }}, {{ byteSize(task.attachment) }}</span>
+          </td>
+          <td>
+            <a *ngIf="task.image" (click)="openFile(task.image, task.imageContentType)">
+              <img [src]="'data:' + task.imageContentType + ';base64,' + task.image" style="max-height: 30px" alt="task image" />
+            </a>
+            <span *ngIf="task.image">{{ task.imageContentType }}, {{ byteSize(task.image) }}</span>
+          </td>
+          <td>
+            <div *ngIf="task.sprint">
+              <a [routerLink]="['/sprint', task.sprint.id, 'view']">{{ task.sprint.number }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="task.collaborator">
+              <a [routerLink]="['/collaborator', task.collaborator.id, 'view']">{{ task.collaborator.name }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/task', task.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/task', task.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(task)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Excluir</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="tasks && tasks.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

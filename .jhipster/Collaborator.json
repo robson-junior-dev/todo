@@ -1,0 +1,69 @@
+{
+  "applications": "*",
+  "changelogDate": "20230205205020",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "collaborator",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength", "pattern"],
+      "fieldValidateRulesMaxlength": "255",
+      "fieldValidateRulesMinlength": "1",
+      "fieldValidateRulesPattern": "(\\D+)"
+    },
+    {
+      "fieldName": "dateOfBirth",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "photo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "document",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "cpf",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isLeader",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Collaborator",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "one-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "collaborator",
+      "relationshipName": "leader",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "project",
+      "otherEntityRelationshipName": "collaborator",
+      "ownerSide": false,
+      "relationshipName": "project",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceClass"
+}
