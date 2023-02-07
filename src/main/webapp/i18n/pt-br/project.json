@@ -2,25 +2,25 @@
   "todoApp": {
     "project": {
       "home": {
-        "title": "Projects",
+        "title": "Projeto",
         "refreshListLabel": "Atualizar lista",
-        "createLabel": "Criar novo Project",
-        "createOrEditLabel": "Criar ou editar Project",
-        "notFound": "Nenhum Project encontrado"
+        "createLabel": "Criar novo projeto",
+        "createOrEditLabel": "Criar ou editar projeto",
+        "notFound": "Nenhum projeto encontrado"
       },
-      "created": "Um novo Project foi criado com o identificador {{ param }}",
-      "updated": "Um Project foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Project foi excluído com o identificador {{ param }}",
+      "created": "Um novo projeto foi criado com o identificador {{ param }}",
+      "updated": "Um projeto foi atualizado com o identificador {{ param }}",
+      "deleted": "Um projeto foi excluído com o identificador {{ param }}",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Project {{ id }}?"
+        "question": "Tem certeza de que deseja excluir o projeto {{ id }}?"
       },
       "detail": {
-        "title": "Project"
+        "title": "Projeto"
       },
       "id": "ID",
-      "name": "Name",
-      "description": "Description",
-      "collaborator": "Collaborator"
+      "name": "Nome",
+      "description": "Descrição",
+      "collaborator": "Colaboradores"
     }
   }
 }

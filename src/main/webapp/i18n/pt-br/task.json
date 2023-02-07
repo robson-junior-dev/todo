@@ -4,28 +4,28 @@
       "home": {
         "title": "Tasks",
         "refreshListLabel": "Atualizar lista",
-        "createLabel": "Criar novo Task",
-        "createOrEditLabel": "Criar ou editar Task",
-        "notFound": "Nenhum Task encontrado"
+        "createLabel": "Criar nova task",
+        "createOrEditLabel": "Criar ou editar task",
+        "notFound": "Nenhuma task encontrada"
       },
-      "created": "Um novo Task foi criado com o identificador {{ param }}",
-      "updated": "Um Task foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Task foi excluído com o identificador {{ param }}",
+      "created": "Uma nova task foi criada com o identificador {{ param }}",
+      "updated": "Uma task foi atualizada com o identificador {{ param }}",
+      "deleted": "Uma task foi excluída com o identificador {{ param }}",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Task {{ id }}?"
+        "question": "Tem certeza de que deseja excluir a task {{ id }}?"
       },
       "detail": {
         "title": "Task"
       },
       "id": "ID",
-      "name": "Name",
-      "description": "Description",
+      "name": "Nome",
+      "description": "Descrição",
       "status": "Status",
-      "hoursToComplete": "Hours To Complete",
-      "attachment": "Attachment",
-      "image": "Image",
+      "hoursToComplete": "Horas",
+      "attachment": "Anexo",
+      "image": "Imagem",
       "sprint": "Sprint",
-      "collaborator": "Collaborator"
+      "collaborator": "Colaborador"
     }
   }
 }

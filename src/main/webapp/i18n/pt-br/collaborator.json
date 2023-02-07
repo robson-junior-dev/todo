@@ -2,31 +2,31 @@
   "todoApp": {
     "collaborator": {
       "home": {
-        "title": "Collaborators",
+        "title": "Colaboradores",
         "refreshListLabel": "Atualizar lista",
-        "createLabel": "Criar novo Collaborator",
-        "createOrEditLabel": "Criar ou editar Collaborator",
-        "notFound": "Nenhum Collaborator encontrado"
+        "createLabel": "Criar novo colaborador",
+        "createOrEditLabel": "Criar ou editar colaborador",
+        "notFound": "Nenhum colaboradorencontrado"
       },
-      "created": "Um novo Collaborator foi criado com o identificador {{ param }}",
-      "updated": "Um Collaborator foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Collaborator foi excluído com o identificador {{ param }}",
+      "created": "Um novo colaborador foi criado com o identificador {{ param }}",
+      "updated": "Um colaborador foi atualizado com o identificador {{ param }}",
+      "deleted": "Um colaborador foi excluído com o identificador {{ param }}",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Collaborator {{ id }}?"
+        "question": "Tem certeza de que deseja excluir o colaborador {{ id }}?"
       },
       "detail": {
-        "title": "Collaborator"
+        "title": "Colaborador"
       },
       "id": "ID",
-      "name": "Name",
-      "dateOfBirth": "Date Of Birth",
-      "photo": "Photo",
-      "document": "Document",
-      "cpf": "Cpf",
-      "isLeader": "Is Leader",
-      "user": "User",
-      "leader": "Leader",
-      "project": "Project"
+      "name": "Nome",
+      "dateOfBirth": "Data de nascimento",
+      "photo": "Foto",
+      "document": "Documento",
+      "cpf": "CPF",
+      "isLeader": "É líder",
+      "user": "Usuário",
+      "leader": "Líder",
+      "project": "Projeto"
     }
   }
 }

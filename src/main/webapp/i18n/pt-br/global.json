@@ -7,10 +7,10 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entidades",
-        "collaborator": "Collaborator",
-        "project": "Project",
-        "sprint": "Sprint",
-        "task": "Task",
+        "collaborator": "Colaboradores",
+        "project": "Projetos",
+        "sprint": "Sprints",
+        "task": "Tasks",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

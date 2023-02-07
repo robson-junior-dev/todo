@@ -4,23 +4,23 @@
       "home": {
         "title": "Sprints",
         "refreshListLabel": "Atualizar lista",
-        "createLabel": "Criar novo Sprint",
-        "createOrEditLabel": "Criar ou editar Sprint",
-        "notFound": "Nenhum Sprint encontrado"
+        "createLabel": "Criar nova sprint",
+        "createOrEditLabel": "Criar ou editar sprint",
+        "notFound": "Nenhuma sprint encontrada"
       },
-      "created": "Um novo Sprint foi criado com o identificador {{ param }}",
-      "updated": "Um Sprint foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Sprint foi excluído com o identificador {{ param }}",
+      "created": "Uma novo sprint foi criada com o identificador {{ param }}",
+      "updated": "Uma sprint foi atualizada com o identificador {{ param }}",
+      "deleted": "Uma sprint foi excluída com o identificador {{ param }}",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Sprint {{ id }}?"
+        "question": "Tem certeza de que deseja excluir a sprint {{ id }}?"
       },
       "detail": {
         "title": "Sprint"
       },
       "id": "ID",
-      "number": "Number",
+      "number": "Número",
       "status": "Status",
-      "project": "Project"
+      "project": "Projeto"
     }
   }
 }
