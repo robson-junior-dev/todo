@@ -13,9 +13,10 @@ import { SortByDirective } from './sort/sort-by.directive';
 import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
 import { FilterComponent } from './filter/filter.component';
+import { Button, ButtonModule } from 'primeng/button';
 
 @NgModule({
-  imports: [SharedLibsModule],
+  imports: [SharedLibsModule, ButtonModule],
   declarations: [
     FindLanguageFromKeyPipe,
     TranslateDirective,
@@ -44,6 +45,7 @@ import { FilterComponent } from './filter/filter.component';
     SortDirective,
     ItemCountComponent,
     FilterComponent,
+    ButtonModule,
   ],
 })
 export class SharedModule {}
