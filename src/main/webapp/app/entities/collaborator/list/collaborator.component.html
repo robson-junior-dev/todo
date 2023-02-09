@@ -117,7 +117,7 @@
             >
             <span *ngIf="collaborator.document">{{ collaborator.documentContentType }}, {{ byteSize(collaborator.document) }}</span>
           </td>
-          <td>{{ collaborator.cpf }}</td>
+          <td>{{ collaborator.cpf || '' | mask: '000.000.000-00' }}</td>
           <td>{{ collaborator.isLeader }}</td>
           <td>
             {{ collaborator.user?.login }}

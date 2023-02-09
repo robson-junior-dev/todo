@@ -2,16 +2,24 @@ package br.dev.robsonjunior.todo.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import br.dev.robsonjunior.todo.IntegrationTest;
 import br.dev.robsonjunior.todo.domain.Collaborator;
 import br.dev.robsonjunior.todo.domain.Project;
 import br.dev.robsonjunior.todo.repository.ProjectRepository;
 import br.dev.robsonjunior.todo.service.ProjectService;
-import br.dev.robsonjunior.todo.service.criteria.ProjectCriteria;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -25,7 +33,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -300,7 +307,8 @@ class ProjectResourceIT {
         // Initialize the database
         projectRepository.saveAndFlush(project);
 
-        // Get all the projectList where description in DEFAULT_DESCRIPTION or UPDATED_DESCRIPTION
+        // Get all the projectList where description in DEFAULT_DESCRIPTION or
+        // UPDATED_DESCRIPTION
         defaultProjectShouldBeFound("description.in=" + DEFAULT_DESCRIPTION + "," + UPDATED_DESCRIPTION);
 
         // Get all the projectList where description equals to UPDATED_DESCRIPTION
@@ -339,10 +347,12 @@ class ProjectResourceIT {
         // Initialize the database
         projectRepository.saveAndFlush(project);
 
-        // Get all the projectList where description does not contain DEFAULT_DESCRIPTION
+        // Get all the projectList where description does not contain
+        // DEFAULT_DESCRIPTION
         defaultProjectShouldNotBeFound("description.doesNotContain=" + DEFAULT_DESCRIPTION);
 
-        // Get all the projectList where description does not contain UPDATED_DESCRIPTION
+        // Get all the projectList where description does not contain
+        // UPDATED_DESCRIPTION
         defaultProjectShouldBeFound("description.doesNotContain=" + UPDATED_DESCRIPTION);
     }
 
@@ -425,7 +435,8 @@ class ProjectResourceIT {
 
         // Update the project
         Project updatedProject = projectRepository.findById(project.getId()).get();
-        // Disconnect from session so that the updates on updatedProject are not directly saved in db
+        // Disconnect from session so that the updates on updatedProject are not
+        // directly saved in db
         em.detach(updatedProject);
         updatedProject.name(UPDATED_NAME).description(UPDATED_DESCRIPTION);
 

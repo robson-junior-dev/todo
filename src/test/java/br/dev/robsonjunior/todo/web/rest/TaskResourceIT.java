@@ -2,9 +2,18 @@ package br.dev.robsonjunior.todo.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import br.dev.robsonjunior.todo.IntegrationTest;
 import br.dev.robsonjunior.todo.domain.Collaborator;
@@ -13,7 +22,6 @@ import br.dev.robsonjunior.todo.domain.Task;
 import br.dev.robsonjunior.todo.domain.enumeration.TaskStatus;
 import br.dev.robsonjunior.todo.repository.TaskRepository;
 import br.dev.robsonjunior.todo.service.TaskService;
-import br.dev.robsonjunior.todo.service.criteria.TaskCriteria;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -27,7 +35,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -391,7 +398,8 @@ class TaskResourceIT {
         // Initialize the database
         taskRepository.saveAndFlush(task);
 
-        // Get all the taskList where description in DEFAULT_DESCRIPTION or UPDATED_DESCRIPTION
+        // Get all the taskList where description in DEFAULT_DESCRIPTION or
+        // UPDATED_DESCRIPTION
         defaultTaskShouldBeFound("description.in=" + DEFAULT_DESCRIPTION + "," + UPDATED_DESCRIPTION);
 
         // Get all the taskList where description equals to UPDATED_DESCRIPTION
@@ -482,10 +490,12 @@ class TaskResourceIT {
         // Initialize the database
         taskRepository.saveAndFlush(task);
 
-        // Get all the taskList where hoursToComplete equals to DEFAULT_HOURS_TO_COMPLETE
+        // Get all the taskList where hoursToComplete equals to
+        // DEFAULT_HOURS_TO_COMPLETE
         defaultTaskShouldBeFound("hoursToComplete.equals=" + DEFAULT_HOURS_TO_COMPLETE);
 
-        // Get all the taskList where hoursToComplete equals to UPDATED_HOURS_TO_COMPLETE
+        // Get all the taskList where hoursToComplete equals to
+        // UPDATED_HOURS_TO_COMPLETE
         defaultTaskShouldNotBeFound("hoursToComplete.equals=" + UPDATED_HOURS_TO_COMPLETE);
     }
 
@@ -495,10 +505,12 @@ class TaskResourceIT {
         // Initialize the database
         taskRepository.saveAndFlush(task);
 
-        // Get all the taskList where hoursToComplete in DEFAULT_HOURS_TO_COMPLETE or UPDATED_HOURS_TO_COMPLETE
+        // Get all the taskList where hoursToComplete in DEFAULT_HOURS_TO_COMPLETE or
+        // UPDATED_HOURS_TO_COMPLETE
         defaultTaskShouldBeFound("hoursToComplete.in=" + DEFAULT_HOURS_TO_COMPLETE + "," + UPDATED_HOURS_TO_COMPLETE);
 
-        // Get all the taskList where hoursToComplete equals to UPDATED_HOURS_TO_COMPLETE
+        // Get all the taskList where hoursToComplete equals to
+        // UPDATED_HOURS_TO_COMPLETE
         defaultTaskShouldNotBeFound("hoursToComplete.in=" + UPDATED_HOURS_TO_COMPLETE);
     }
 
@@ -521,10 +533,12 @@ class TaskResourceIT {
         // Initialize the database
         taskRepository.saveAndFlush(task);
 
-        // Get all the taskList where hoursToComplete is greater than or equal to DEFAULT_HOURS_TO_COMPLETE
+        // Get all the taskList where hoursToComplete is greater than or equal to
+        // DEFAULT_HOURS_TO_COMPLETE
         defaultTaskShouldBeFound("hoursToComplete.greaterThanOrEqual=" + DEFAULT_HOURS_TO_COMPLETE);
 
-        // Get all the taskList where hoursToComplete is greater than or equal to UPDATED_HOURS_TO_COMPLETE
+        // Get all the taskList where hoursToComplete is greater than or equal to
+        // UPDATED_HOURS_TO_COMPLETE
         defaultTaskShouldNotBeFound("hoursToComplete.greaterThanOrEqual=" + UPDATED_HOURS_TO_COMPLETE);
     }
 
@@ -534,10 +548,12 @@ class TaskResourceIT {
         // Initialize the database
         taskRepository.saveAndFlush(task);
 
-        // Get all the taskList where hoursToComplete is less than or equal to DEFAULT_HOURS_TO_COMPLETE
+        // Get all the taskList where hoursToComplete is less than or equal to
+        // DEFAULT_HOURS_TO_COMPLETE
         defaultTaskShouldBeFound("hoursToComplete.lessThanOrEqual=" + DEFAULT_HOURS_TO_COMPLETE);
 
-        // Get all the taskList where hoursToComplete is less than or equal to SMALLER_HOURS_TO_COMPLETE
+        // Get all the taskList where hoursToComplete is less than or equal to
+        // SMALLER_HOURS_TO_COMPLETE
         defaultTaskShouldNotBeFound("hoursToComplete.lessThanOrEqual=" + SMALLER_HOURS_TO_COMPLETE);
     }
 
@@ -547,10 +563,12 @@ class TaskResourceIT {
         // Initialize the database
         taskRepository.saveAndFlush(task);
 
-        // Get all the taskList where hoursToComplete is less than DEFAULT_HOURS_TO_COMPLETE
+        // Get all the taskList where hoursToComplete is less than
+        // DEFAULT_HOURS_TO_COMPLETE
         defaultTaskShouldNotBeFound("hoursToComplete.lessThan=" + DEFAULT_HOURS_TO_COMPLETE);
 
-        // Get all the taskList where hoursToComplete is less than UPDATED_HOURS_TO_COMPLETE
+        // Get all the taskList where hoursToComplete is less than
+        // UPDATED_HOURS_TO_COMPLETE
         defaultTaskShouldBeFound("hoursToComplete.lessThan=" + UPDATED_HOURS_TO_COMPLETE);
     }
 
@@ -560,10 +578,12 @@ class TaskResourceIT {
         // Initialize the database
         taskRepository.saveAndFlush(task);
 
-        // Get all the taskList where hoursToComplete is greater than DEFAULT_HOURS_TO_COMPLETE
+        // Get all the taskList where hoursToComplete is greater than
+        // DEFAULT_HOURS_TO_COMPLETE
         defaultTaskShouldNotBeFound("hoursToComplete.greaterThan=" + DEFAULT_HOURS_TO_COMPLETE);
 
-        // Get all the taskList where hoursToComplete is greater than SMALLER_HOURS_TO_COMPLETE
+        // Get all the taskList where hoursToComplete is greater than
+        // SMALLER_HOURS_TO_COMPLETE
         defaultTaskShouldBeFound("hoursToComplete.greaterThan=" + SMALLER_HOURS_TO_COMPLETE);
     }
 
@@ -675,7 +695,8 @@ class TaskResourceIT {
 
         // Update the task
         Task updatedTask = taskRepository.findById(task.getId()).get();
-        // Disconnect from session so that the updates on updatedTask are not directly saved in db
+        // Disconnect from session so that the updates on updatedTask are not directly
+        // saved in db
         em.detach(updatedTask);
         updatedTask
             .name(UPDATED_NAME)

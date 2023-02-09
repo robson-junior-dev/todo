@@ -1,6 +1,5 @@
 package br.dev.robsonjunior.todo;
 
-import br.dev.robsonjunior.todo.TodoApp;
 import br.dev.robsonjunior.todo.config.AsyncSyncConfiguration;
 import br.dev.robsonjunior.todo.config.EmbeddedSQL;
 import java.lang.annotation.ElementType;

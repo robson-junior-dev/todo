@@ -2,9 +2,9 @@
   "todoApp": {
     "TaskStatus": {
       "null": "",
-      "TO_DO": "TO_DO",
-      "IN_PROGRESS": "IN_PROGRESS",
-      "FINISHED": "FINISHED"
+      "TO_DO": "Para fazer",
+      "IN_PROGRESS": "Em progresso",
+      "FINISHED": "Finalizado"
     }
   }
 }

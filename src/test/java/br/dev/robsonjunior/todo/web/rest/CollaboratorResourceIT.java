@@ -2,18 +2,25 @@ package br.dev.robsonjunior.todo.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import br.dev.robsonjunior.todo.IntegrationTest;
-import br.dev.robsonjunior.todo.domain.Collaborator;
 import br.dev.robsonjunior.todo.domain.Collaborator;
 import br.dev.robsonjunior.todo.domain.Project;
 import br.dev.robsonjunior.todo.domain.User;
 import br.dev.robsonjunior.todo.repository.CollaboratorRepository;
 import br.dev.robsonjunior.todo.service.CollaboratorService;
-import br.dev.robsonjunior.todo.service.criteria.CollaboratorCriteria;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -29,7 +36,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -353,10 +359,12 @@ class CollaboratorResourceIT {
         // Initialize the database
         collaboratorRepository.saveAndFlush(collaborator);
 
-        // Get all the collaboratorList where dateOfBirth equals to DEFAULT_DATE_OF_BIRTH
+        // Get all the collaboratorList where dateOfBirth equals to
+        // DEFAULT_DATE_OF_BIRTH
         defaultCollaboratorShouldBeFound("dateOfBirth.equals=" + DEFAULT_DATE_OF_BIRTH);
 
-        // Get all the collaboratorList where dateOfBirth equals to UPDATED_DATE_OF_BIRTH
+        // Get all the collaboratorList where dateOfBirth equals to
+        // UPDATED_DATE_OF_BIRTH
         defaultCollaboratorShouldNotBeFound("dateOfBirth.equals=" + UPDATED_DATE_OF_BIRTH);
     }
 
@@ -366,10 +374,12 @@ class CollaboratorResourceIT {
         // Initialize the database
         collaboratorRepository.saveAndFlush(collaborator);
 
-        // Get all the collaboratorList where dateOfBirth in DEFAULT_DATE_OF_BIRTH or UPDATED_DATE_OF_BIRTH
+        // Get all the collaboratorList where dateOfBirth in DEFAULT_DATE_OF_BIRTH or
+        // UPDATED_DATE_OF_BIRTH
         defaultCollaboratorShouldBeFound("dateOfBirth.in=" + DEFAULT_DATE_OF_BIRTH + "," + UPDATED_DATE_OF_BIRTH);
 
-        // Get all the collaboratorList where dateOfBirth equals to UPDATED_DATE_OF_BIRTH
+        // Get all the collaboratorList where dateOfBirth equals to
+        // UPDATED_DATE_OF_BIRTH
         defaultCollaboratorShouldNotBeFound("dateOfBirth.in=" + UPDATED_DATE_OF_BIRTH);
     }
 
@@ -392,10 +402,12 @@ class CollaboratorResourceIT {
         // Initialize the database
         collaboratorRepository.saveAndFlush(collaborator);
 
-        // Get all the collaboratorList where dateOfBirth is greater than or equal to DEFAULT_DATE_OF_BIRTH
+        // Get all the collaboratorList where dateOfBirth is greater than or equal to
+        // DEFAULT_DATE_OF_BIRTH
         defaultCollaboratorShouldBeFound("dateOfBirth.greaterThanOrEqual=" + DEFAULT_DATE_OF_BIRTH);
 
-        // Get all the collaboratorList where dateOfBirth is greater than or equal to UPDATED_DATE_OF_BIRTH
+        // Get all the collaboratorList where dateOfBirth is greater than or equal to
+        // UPDATED_DATE_OF_BIRTH
         defaultCollaboratorShouldNotBeFound("dateOfBirth.greaterThanOrEqual=" + UPDATED_DATE_OF_BIRTH);
     }
 
@@ -405,10 +417,12 @@ class CollaboratorResourceIT {
         // Initialize the database
         collaboratorRepository.saveAndFlush(collaborator);
 
-        // Get all the collaboratorList where dateOfBirth is less than or equal to DEFAULT_DATE_OF_BIRTH
+        // Get all the collaboratorList where dateOfBirth is less than or equal to
+        // DEFAULT_DATE_OF_BIRTH
         defaultCollaboratorShouldBeFound("dateOfBirth.lessThanOrEqual=" + DEFAULT_DATE_OF_BIRTH);
 
-        // Get all the collaboratorList where dateOfBirth is less than or equal to SMALLER_DATE_OF_BIRTH
+        // Get all the collaboratorList where dateOfBirth is less than or equal to
+        // SMALLER_DATE_OF_BIRTH
         defaultCollaboratorShouldNotBeFound("dateOfBirth.lessThanOrEqual=" + SMALLER_DATE_OF_BIRTH);
     }
 
@@ -418,10 +432,12 @@ class CollaboratorResourceIT {
         // Initialize the database
         collaboratorRepository.saveAndFlush(collaborator);
 
-        // Get all the collaboratorList where dateOfBirth is less than DEFAULT_DATE_OF_BIRTH
+        // Get all the collaboratorList where dateOfBirth is less than
+        // DEFAULT_DATE_OF_BIRTH
         defaultCollaboratorShouldNotBeFound("dateOfBirth.lessThan=" + DEFAULT_DATE_OF_BIRTH);
 
-        // Get all the collaboratorList where dateOfBirth is less than UPDATED_DATE_OF_BIRTH
+        // Get all the collaboratorList where dateOfBirth is less than
+        // UPDATED_DATE_OF_BIRTH
         defaultCollaboratorShouldBeFound("dateOfBirth.lessThan=" + UPDATED_DATE_OF_BIRTH);
     }
 
@@ -431,10 +447,12 @@ class CollaboratorResourceIT {
         // Initialize the database
         collaboratorRepository.saveAndFlush(collaborator);
 
-        // Get all the collaboratorList where dateOfBirth is greater than DEFAULT_DATE_OF_BIRTH
+        // Get all the collaboratorList where dateOfBirth is greater than
+        // DEFAULT_DATE_OF_BIRTH
         defaultCollaboratorShouldNotBeFound("dateOfBirth.greaterThan=" + DEFAULT_DATE_OF_BIRTH);
 
-        // Get all the collaboratorList where dateOfBirth is greater than SMALLER_DATE_OF_BIRTH
+        // Get all the collaboratorList where dateOfBirth is greater than
+        // SMALLER_DATE_OF_BIRTH
         defaultCollaboratorShouldBeFound("dateOfBirth.greaterThan=" + SMALLER_DATE_OF_BIRTH);
     }
 
@@ -522,7 +540,8 @@ class CollaboratorResourceIT {
         // Initialize the database
         collaboratorRepository.saveAndFlush(collaborator);
 
-        // Get all the collaboratorList where isLeader in DEFAULT_IS_LEADER or UPDATED_IS_LEADER
+        // Get all the collaboratorList where isLeader in DEFAULT_IS_LEADER or
+        // UPDATED_IS_LEADER
         defaultCollaboratorShouldBeFound("isLeader.in=" + DEFAULT_IS_LEADER + "," + UPDATED_IS_LEADER);
 
         // Get all the collaboratorList where isLeader equals to UPDATED_IS_LEADER
@@ -665,7 +684,8 @@ class CollaboratorResourceIT {
 
         // Update the collaborator
         Collaborator updatedCollaborator = collaboratorRepository.findById(collaborator.getId()).get();
-        // Disconnect from session so that the updates on updatedCollaborator are not directly saved in db
+        // Disconnect from session so that the updates on updatedCollaborator are not
+        // directly saved in db
         em.detach(updatedCollaborator);
         updatedCollaborator
             .name(UPDATED_NAME)

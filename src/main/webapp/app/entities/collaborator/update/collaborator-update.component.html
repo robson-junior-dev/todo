@@ -149,7 +149,16 @@
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="todoApp.collaborator.cpf" for="field_cpf">Cpf</label>
-          <input type="text" class="form-control" name="cpf" id="field_cpf" data-cy="cpf" formControlName="cpf" />
+          <input mask="000.000.000-00" type="text" class="form-control" name="cpf" id="field_cpf" data-cy="cpf" formControlName="cpf" />
+          <div *ngIf="editForm.get('cpf')!.invalid && (editForm.get('cpf')!.dirty || editForm.get('cpf')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('cpf')?.errors?.pattern"
+              jhiTranslate="entity.validation.pattern"
+              [translateValues]="{ pattern: 'CPF' }"
+            >
+            </small>
+          </div>
         </div>
 
         <div class="row mb-3">

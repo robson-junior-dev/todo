@@ -44,7 +44,7 @@
         </dd>
         <dt><span jhiTranslate="todoApp.collaborator.cpf">Cpf</span></dt>
         <dd>
-          <span>{{ collaborator.cpf }}</span>
+          <span>{{ collaborator.cpf || '' | mask: '000.000.000-00' }}</span>
         </dd>
         <dt><span jhiTranslate="todoApp.collaborator.isLeader">Is Leader</span></dt>
         <dd>

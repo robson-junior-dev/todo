@@ -2,9 +2,18 @@ package br.dev.robsonjunior.todo.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import br.dev.robsonjunior.todo.IntegrationTest;
 import br.dev.robsonjunior.todo.domain.Project;
@@ -12,7 +21,6 @@ import br.dev.robsonjunior.todo.domain.Sprint;
 import br.dev.robsonjunior.todo.domain.enumeration.SprintStatus;
 import br.dev.robsonjunior.todo.repository.SprintRepository;
 import br.dev.robsonjunior.todo.service.SprintService;
-import br.dev.robsonjunior.todo.service.criteria.SprintCriteria;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -26,7 +34,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -437,7 +444,8 @@ class SprintResourceIT {
 
         // Update the sprint
         Sprint updatedSprint = sprintRepository.findById(sprint.getId()).get();
-        // Disconnect from session so that the updates on updatedSprint are not directly saved in db
+        // Disconnect from session so that the updates on updatedSprint are not directly
+        // saved in db
         em.detach(updatedSprint);
         updatedSprint.number(UPDATED_NUMBER).status(UPDATED_STATUS);
 

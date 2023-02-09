@@ -5,10 +5,24 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.br.CPF;
 
 /**
  * A Collaborator.
@@ -50,6 +64,7 @@ public class Collaborator implements Serializable {
     @Column(name = "document_content_type")
     private String documentContentType;
 
+    @CPF
     @Column(name = "cpf")
     private String cpf;
 
@@ -246,7 +261,8 @@ public class Collaborator implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here
 
     @Override
     public boolean equals(Object o) {
@@ -261,7 +277,8 @@ public class Collaborator implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -269,15 +286,15 @@ public class Collaborator implements Serializable {
     @Override
     public String toString() {
         return "Collaborator{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", dateOfBirth='" + getDateOfBirth() + "'" +
-            ", photo='" + getPhoto() + "'" +
-            ", photoContentType='" + getPhotoContentType() + "'" +
-            ", document='" + getDocument() + "'" +
-            ", documentContentType='" + getDocumentContentType() + "'" +
-            ", cpf='" + getCpf() + "'" +
-            ", isLeader='" + getIsLeader() + "'" +
-            "}";
+                "id=" + getId() +
+                ", name='" + getName() + "'" +
+                ", dateOfBirth='" + getDateOfBirth() + "'" +
+                ", photo='" + getPhoto() + "'" +
+                ", photoContentType='" + getPhotoContentType() + "'" +
+                ", document='" + getDocument() + "'" +
+                ", documentContentType='" + getDocumentContentType() + "'" +
+                ", cpf='" + getCpf() + "'" +
+                ", isLeader='" + getIsLeader() + "'" +
+                "}";
     }
 }

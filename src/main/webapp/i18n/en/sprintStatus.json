@@ -2,9 +2,9 @@
   "todoApp": {
     "SprintStatus": {
       "null": "",
-      "IN_PLANNING": "IN_PLANNING",
-      "IN_PROGRESS": "IN_PROGRESS",
-      "FINISHED": "FINISHED"
+      "IN_PLANNING": "In planning",
+      "IN_PROGRESS": "In progress",
+      "FINISHED": "Finished"
     }
   }
 }

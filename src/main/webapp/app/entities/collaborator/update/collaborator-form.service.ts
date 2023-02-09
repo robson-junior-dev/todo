@@ -56,7 +56,9 @@ export class CollaboratorFormService {
       photoContentType: new FormControl(collaboratorRawValue.photoContentType),
       document: new FormControl(collaboratorRawValue.document),
       documentContentType: new FormControl(collaboratorRawValue.documentContentType),
-      cpf: new FormControl(collaboratorRawValue.cpf),
+      cpf: new FormControl(collaboratorRawValue.cpf, {
+        validators: [Validators.required, Validators.pattern('([0-9]{3}[.]?[0-9]{3}[.]?[0-9]{3}-[0-9]{2})|([0-9]{11})')],
+      }),
       isLeader: new FormControl(collaboratorRawValue.isLeader),
       user: new FormControl(collaboratorRawValue.user, {
         validators: [Validators.required],
